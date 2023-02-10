@@ -1,2 +1,3 @@
-# battleship
+# Battleship
+
 A web Battleship game.
