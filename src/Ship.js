@@ -20,9 +20,14 @@ export default function Ship(length) {
         return _length;
     };
 
+    const getNumHits = () => {
+        return _numHits;
+    };
+
     return {
         hit,
         isSunk,
-        getLength
+        getLength,
+        getNumHits
     }
 }

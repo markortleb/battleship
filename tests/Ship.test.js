@@ -23,4 +23,15 @@ describe('Ship', () => {
 
         expect(ship.isSunk()).toBe(false);
     });
+
+    it('Hit Ship 3 times and make sure getNumHits returns 3.', () => {
+        let ship = Ship(5);
+        let numHitsToExpect = 3;
+
+        for (let i = 0; i < numHitsToExpect; i++) {
+            ship.hit();
+        }
+
+        expect(ship.getNumHits()).toBe(numHitsToExpect);
+    });
 });

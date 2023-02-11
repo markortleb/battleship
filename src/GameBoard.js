@@ -6,6 +6,17 @@ export default function GameBoard() {
     let _width = 10;
     let _shipMap = [];
 
+    const _inRay = (min, x, max) => {
+        return min <= x && x < max;
+    };
+
+    const _onBoard = (x1, y1, x2, y2) => {
+        const check1 = _inRay(0, x1, _width) && _inRay(0, y1, _height);
+        const check2 = _inRay(0, x2, _width) && _inRay(0, y2, _height);
+
+        return check1 && check2;
+    };
+
     const addShip = (x1, y1, direction, ship) => {
         let success = true;
         let x2 = x1;
@@ -19,7 +30,9 @@ export default function GameBoard() {
             success = false;
         }
 
-        if (0 <= x1 < _width && 0 <= x2 < _width && 0 <= y1 < _height && 0 <= y2 < _height) {
+        console.log(x2);
+
+        if (success && _onBoard(x1, y1, x2, y2)) {
             _shipMap.push(
                 {
                     x1: x1,
@@ -41,6 +54,7 @@ export default function GameBoard() {
     };
 
     return {
+        addShip,
         getShipMap
     };
 }
