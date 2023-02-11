@@ -16,8 +16,13 @@ export default function Ship(length) {
         return sunk;
     };
 
+    const getLength = () => {
+        return _length;
+    };
+
     return {
         hit,
-        isSunk
+        isSunk,
+        getLength
     }
 }
