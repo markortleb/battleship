@@ -48,6 +48,16 @@ describe('GameBoard', () => {
         expect(gameBoard.addShip(x1, y1, 'vertical', ship)).toBe(false);
     });
 
+    it('Test that multiple non intersecting ships can be added. Expect to add ship.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(2, 0, 'vertical', ship1);
+
+        expect(gameBoard.addShip(0, 2, 'vertical', ship2)).toBe(false);
+    });
+
     it('Test that ships cannot intersect perpendicularly. Expect to fail to add ship.', () => {
         let gameBoard = GameBoard();
         let ship1 = Ship(3);

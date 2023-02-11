@@ -17,6 +17,45 @@ export default function GameBoard() {
         return check1 && check2;
     };
 
+    const _getShipCoordinates = (x1, y1, x2, y2) => {
+        let shipCoordinates = [];
+
+        for (let x = x1; x <= x2; x++) {
+            for (let y = y1; y <= y2; y++) {
+                shipCoordinates.push(
+                    {
+                        x: x,
+                        y: y
+                    }
+                );
+            }
+        }
+
+        return shipCoordinates;
+    };
+
+    const _isShipBlocked = (x1, y1, x2, y2) => {
+        const shipCoordinates = _getShipCoordinates(x1, y1, x2, y2);
+        let shipBlocked = false;
+
+        console.log(shipCoordinates);
+
+        for (let i = 0; i < _shipMap.length; i++) {
+            let otherShipCoordinates = _getShipCoordinates(
+                _shipMap[i].x1,
+                _shipMap[i].y1,
+                _shipMap[i].x2,
+                _shipMap[i].y2
+            );
+
+            if (otherShipCoordinates.some(r => shipCoordinates.filter(t => t.x === r.x && t.y === r.y))) {
+               shipBlocked = true;
+            }
+        }
+
+        return shipBlocked;
+    };
+
     const addShip = (x1, y1, direction, ship) => {
         let success = true;
         let x2 = x1;
@@ -32,7 +71,7 @@ export default function GameBoard() {
 
         console.log(x2);
 
-        if (success && _onBoard(x1, y1, x2, y2)) {
+        if (success && _onBoard(x1, y1, x2, y2) && !_isShipBlocked(x1, y1, x2, y2)) {
             _shipMap.push(
                 {
                     x1: x1,
