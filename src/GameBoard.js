@@ -2,12 +2,40 @@ import Ship from './Ship';
 
 
 export default function GameBoard() {
-    let _height = 10;
-    let _width = 10;
+    const _height = 10;
+    const _width = 10;
     let _shipMap = [];
+    let _hitMap = [];
 
     const _inRay = (min, x, max) => {
         return min <= x && x < max;
+    };
+
+    const _markHitMap = (x, y) => {
+        let point = {x:x, y:y};
+        if (_hitMap.filter(item => item.x === x && item.y === y).length === 0) {
+            _hitMap.push(point);
+        }
+    };
+
+    const _hitShip = (x, y) => {
+        let directHit = false;
+
+        for (let i = 0; i < _shipMap.length; i++) {
+            let shipCoordinates = _getShipCoordinates(
+                _shipMap[i].x1,
+                _shipMap[i].y1,
+                _shipMap[i].x2,
+                _shipMap[i].y2
+            );
+
+            if (shipCoordinates.filter(item => item.x === x && item.y === y).length > 0) {
+                _shipMap[i].ship.hit();
+                directHit = true;
+            }
+        }
+
+        return directHit;
     };
 
     const _onBoard = (x1, y1, x2, y2) => {
@@ -38,8 +66,6 @@ export default function GameBoard() {
         const shipCoordinates = _getShipCoordinates(x1, y1, x2, y2);
         let shipBlocked = false;
 
-        console.log(shipCoordinates);
-
         for (let i = 0; i < _shipMap.length; i++) {
             let otherShipCoordinates = _getShipCoordinates(
                 _shipMap[i].x1,
@@ -48,7 +74,7 @@ export default function GameBoard() {
                 _shipMap[i].y2
             );
 
-            if (otherShipCoordinates.some(r => shipCoordinates.filter(t => t.x === r.x && t.y === r.y))) {
+            if (otherShipCoordinates.some(r => shipCoordinates.filter(t => t.x === r.x && t.y === r.y).length > 0)) {
                shipBlocked = true;
             }
         }
@@ -68,8 +94,6 @@ export default function GameBoard() {
         } else {
             success = false;
         }
-
-        console.log(x2);
 
         if (success && _onBoard(x1, y1, x2, y2) && !_isShipBlocked(x1, y1, x2, y2)) {
             _shipMap.push(
@@ -91,15 +115,49 @@ export default function GameBoard() {
     const hit = (x, y) => {
         let directHit = false;
 
-        return directHit
+        if (_inRay(0, x, _width) && _inRay(0, y, _height)) {
+            _markHitMap(x, y);
+            directHit = _hitShip(x, y);
+        }
+
+        return directHit;
     }
 
-    const getShipMap = () => {
-        return _shipMap;
+    const getHealth = () => {
+        let health = 0;
+        for (let i = 0; i < _shipMap.length; i++) {
+            health += _shipMap[i].ship.getLength() - _shipMap[i].ship.getNumHits();
+        }
+        return health;
+    };
+
+    const getTotalShips = () => {
+        return _shipMap.length;
+    };
+
+    const getTotalLivingShips = () => {
+        return _shipMap.filter(item => !item.ship.isSunk()).length;
+    };
+
+    const getTotalShipArea = () => {
+        let shipArea = 0;
+        for (let i = 0; i < _shipMap.length; i++) {
+            shipArea += _shipMap[i].ship.getLength();
+        }
+        return shipArea;
+    };
+
+    const getHitMap = () => {
+        return _hitMap;
     };
 
     return {
         addShip,
-        getShipMap
+        getHealth,
+        getHitMap,
+        getTotalShipArea,
+        getTotalShips,
+        getTotalLivingShips,
+        hit
     };
 }

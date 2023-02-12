@@ -4,7 +4,9 @@ export default function Ship(length) {
     let _numHits = 0;
 
     const hit = () => {
-        _numHits++;
+        if (_numHits < _length) {
+            _numHits++;
+        }
     };
 
     const isSunk = () => {

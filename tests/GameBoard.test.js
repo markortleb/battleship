@@ -55,7 +55,7 @@ describe('GameBoard', () => {
 
         gameBoard.addShip(2, 0, 'vertical', ship1);
 
-        expect(gameBoard.addShip(0, 2, 'vertical', ship2)).toBe(false);
+        expect(gameBoard.addShip(0, 2, 'vertical', ship2)).toBe(true);
     });
 
     it('Test that ships cannot intersect perpendicularly. Expect to fail to add ship.', () => {
@@ -68,7 +68,7 @@ describe('GameBoard', () => {
         expect(gameBoard.addShip(0, 2, 'horizontal', ship2)).toBe(false);
     });
 
-    it('Test that ships cannot intersect in parallel, vertically . Expect to fail to add ship.', () => {
+    it('Test that ships cannot intersect in parallel, vertically. Expect to fail to add ship.', () => {
         let gameBoard = GameBoard();
         let ship1 = Ship(3);
         let ship2 = Ship(5);
@@ -78,7 +78,7 @@ describe('GameBoard', () => {
         expect(gameBoard.addShip(2, 0, 'vertical', ship2)).toBe(false);
     });
 
-    it('Test that ships cannot intersect in parallel, horizontally . Expect to fail to add ship.', () => {
+    it('Test that ships cannot intersect in parallel, horizontally. Expect to fail to add ship.', () => {
         let gameBoard = GameBoard();
         let ship1 = Ship(3);
         let ship2 = Ship(5);
@@ -87,4 +87,96 @@ describe('GameBoard', () => {
 
         expect(gameBoard.addShip(0, 2, 'horizontal', ship2)).toBe(false);
     });
+
+    it('Test hitting board and missing any ships. Expect false.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+
+        expect(gameBoard.hit(8,8)).toBe(false);
+    });
+
+    it('Test hitting board and getting a hit on a ship. Expect true.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+
+        expect(gameBoard.hit(5,5)).toBe(true);
+    });
+
+    it('Test hitting a ship once, and get the correct number of health.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+        gameBoard.hit(5,5);
+
+        expect(gameBoard.getHealth()).toBe(7);
+    });
+
+    it('Test adding some ships and getting correct total ship area.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+        gameBoard.hit(5,5);
+
+        expect(gameBoard.getTotalShipArea()).toBe(8);
+    });
+
+    it('Test adding some ships and getting correct total number of ships.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+
+        expect(gameBoard.getTotalShips()).toBe(2);
+    });
+
+    it('Test adding some ships, sinking one, and getting total standing ships.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+        gameBoard.hit(1,1);
+        gameBoard.hit(2,1);
+        gameBoard.hit(3,1);
+
+        expect(gameBoard.getTotalLivingShips()).toBe(1);
+    });
+
+
+    it('Test hitting the board a few times, and get correct points.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+        let ship2 = Ship(5);
+        let expectMap = [
+            {x:1, y:1},
+            {x:3, y:2},
+            {x:7, y:0}
+        ];
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.addShip(5, 3, 'vertical', ship2);
+        gameBoard.hit(1,1);
+        gameBoard.hit(3,2);
+        gameBoard.hit(7,0);
+
+        expect(gameBoard.getHitMap().sort()).toEqual(expectMap.sort());
+    });
+
 });
