@@ -88,6 +88,12 @@ export default function GameBoard() {
         return success;
     };
 
+    const hit = (x, y) => {
+        let directHit = false;
+
+        return directHit
+    }
+
     const getShipMap = () => {
         return _shipMap;
     };
