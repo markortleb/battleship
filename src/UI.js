@@ -12,6 +12,12 @@ export default function UI() {
         `;
     }
 
+    const titleScreenInner = () => {
+        return `
+        <span>Play Game!</span>
+        `;
+    }
+
     return {
         skeleton
     }

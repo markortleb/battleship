@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    padding: 0;
 }
 
 body {
@@ -7,10 +8,21 @@ body {
     grid-template-rows: 1fr 7fr;
 }
 
+.game-area {
+    background-image:url('src/img/us_navy_fleet_ww2.jpg');
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .title-area {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: lightslategrey;
+    font-family: "Blackadder ITC";
+    font-size: 4em;
+    font-weight: lighter;
 }
 
 .title-screen {
@@ -19,8 +31,13 @@ body {
     align-items: center;
 }
 
-.title-screen button {
-    padding: 2px;
-    border-radius: 15px;
-    borde
+.title-screen span {
+    font-size: 3em;
+    font-family: Impact;
+    color: #fff7a2;
+}
+
+.title-screen span:hover {
+    font-size: 3.5em;
+    -webkit-text-stroke: 2px black
 }
