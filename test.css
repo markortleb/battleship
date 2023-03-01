@@ -1,0 +1,26 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 1fr 7fr;
+}
+
+.title-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-screen button {
+    padding: 2px;
+    border-radius: 15px;
+    borde
+}
