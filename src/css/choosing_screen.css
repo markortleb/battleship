@@ -1,0 +1,37 @@
+.choosing-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.instructions {
+    font-family: "Century Gothic";
+    font-weight: bolder;
+}
+
+.ship-name {
+    color: purple;
+}
+
+
+
+.info-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2em
+}
+
+.info-area img {
+    filter: invert(11%) sepia(100%) saturate(5256%) hue-rotate(251deg) brightness(89%) contrast(145%);
+    height: 2em;
+}
+
+
+.info-area span {
+    color: bisque;
+    font-size: 1.3em;
+}

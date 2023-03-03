@@ -2,8 +2,8 @@
 
 export default function UI() {
 
-    const _getUserBoard = (width, height) => {
-        let userBoardHtml = '<table class="user-board">';
+    const _getBoard = (className, width, height) => {
+        let userBoardHtml = `<table class="${className}">`;
 
         for (let i = 0; i < height; i++) {
             userBoardHtml += '<tr>'
@@ -29,18 +29,16 @@ export default function UI() {
 
     const titleScreenInner = () => {
         return `
-            <span>Play Game!</span>
+            <span class="play-button">Play Game!</span>
         `;
     }
-
-
 
     const choosingScreenInner = (initialShipName) => {
         return `
         <span class="instructions">
             Place your <span class="ship-name">${initialShipName}</span>.
         </span>
-        ${_getUserBoard(10, 10)}
+        ${_getBoard('user-board',10, 10)}
         <div class="info-area">
             <img src="src/img/arrow-left-bold-box-outline.svg" alt="">
             <span>Use arrow keys to change orientation.</span>
@@ -49,9 +47,51 @@ export default function UI() {
         `;
     }
 
+    const playingScreenInner = () => {
+        return `
+         <span class="turn-announcer">Your Turn</span>
+        <ul class="board-area">
+            <li class="player-area">
+                <span class="board-name">You</span>
+                <div class="stats-area">
+                    <span>HP: 13/13</span>
+                    <span>Ships: 6/6</span>
+                </div>
+                ${_getBoard('user-board',10, 10)}
+            </li>
+            <li class="enemy-area">
+                <span class="board-name">Enemy</span>
+                <div class="stats-area">
+                    <span>HP: 13/13</span>
+                    <span>Ships: 6/6</span>
+                </div>
+                ${_getBoard('enemy-board',10, 10)}
+            </li>
+        </ul>
+        `;
+    };
+
+    const resultScreenInner = (playerWon) => {
+        let resultClass = 'lose';
+        let resultMessage = 'Enemy Wins, You Lose!';
+
+        if (playerWon) {
+            resultClass = 'won';
+            resultMessage = 'You win!';
+        }
+
+        return `
+            <h2>Game Over!</h2>
+            <span class="result ${resultClass}">${resultMessage}</span>
+            <span class="play-button">Play Again?</span>
+        `;
+    };
+
     return {
         skeleton,
         titleScreenInner,
-        choosingScreenInner
-    }
+        choosingScreenInner,
+        playingScreenInner,
+        resultScreenInner
+    };
 }

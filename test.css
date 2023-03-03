@@ -22,68 +22,41 @@ body {
     font-weight: lighter;
 }
 
-.title-screen {
+.result-screen {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 2em;
 }
 
-.title-screen span {
+.result-screen h2 {
+    font-size: 3em;
+    font-weight: bold;
+    color: #5603a1;
+}
+
+.result {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.lose {
+    color: #490000;
+}
+
+.win {
+    color: #003400;
+}
+
+.play-button {
     font-size: 3em;
     font-family: Impact;
     color: #fff7a2;
 }
 
-.title-screen span:hover {
+.play-button:hover {
     font-size: 3.5em;
     -webkit-text-stroke: 2px black
 }
-
-
-.choosing-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 2em;
-}
-
-.instructions {
-    font-family: "Century Gothic";
-    font-weight: bolder;
-}
-
-.ship-name {
-    color: purple;
-}
-
-.user-board td {
-    height: 2em;
-    width: 2em;
-    border: 1px solid black;
-    background-color: aqua;
-}
-
-.user-board td:hover {
-    background-color: #9beeee;
-}
-
-.info-area {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 2em
-}
-
-.info-area img {
-    filter: invert(11%) sepia(100%) saturate(5256%) hue-rotate(251deg) brightness(89%) contrast(145%);
-    height: 2em;
-}
-
-.info-area span {
-    color: bisque;
-    font-size: 1.3em;
-}
-
 
