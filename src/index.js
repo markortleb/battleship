@@ -7,4 +7,6 @@ import './css/result_screen.css';
 import Controller from './Controller';
 
 
-Controller.init();
+let controller = Controller();
+
+controller.init();

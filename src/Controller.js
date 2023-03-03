@@ -6,6 +6,7 @@ export default function Controller() {
     let _renderer = Renderer();
 
     const init = () => {
+        _renderer.renderSkeleton();
         _renderer.renderTitleScreen();
     };
 
