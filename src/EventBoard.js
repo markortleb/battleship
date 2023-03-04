@@ -25,6 +25,17 @@ export default function EventBoard (appState, renderer) {
             _renderer.renderChoosingScreen();
             initChoosingBoard();
         });
+
+        choosingBoardNode.addEventListener('mouseover', e => {
+            let tdNode = choosingBoardNode.querySelectorAll('td:hover')[0]
+            let trNode = tdNode.closest('tr');
+            _renderer.renderPlacementHighlight(tdNode.cellIndex, trNode.rowIndex);
+        });
+
+        choosingBoardNode.addEventListener('mouseleave', e => {
+            _renderer.renderClearHighlight();
+        });
+
     };
 
     return {

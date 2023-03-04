@@ -19,6 +19,7 @@ export default function AppState() {
         player,
         enemy,
         currentPlacingIndex,
-        shipList
+        shipList,
+        choosingOrientation
     };
 }
