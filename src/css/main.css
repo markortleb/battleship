@@ -6,9 +6,6 @@ html, body {
 body {
     display: grid;
     grid-template-rows: 1fr 7fr;
-}
-
-.game-area {
     background-image:url("~/src/img/us_navy_fleet_ww2.jpg");
     background-attachment:fixed;
     background-repeat: no-repeat;
@@ -19,7 +16,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightslategrey;
     font-family: "Blackadder ITC";
     font-size: 4em;
     font-weight: lighter;
