@@ -49,7 +49,7 @@ export default function UI() {
         ${_getBoard('user-board',10, 10)}
         <div class="info-area">
             <img src="${_arrowLeftImg.src}" alt="">
-            <span>Use arrow keys to change orientation.</span>
+            <span>Use buttons to change orientation.</span>
             <img src="${_arrowRightImg.src}" alt="">
         </div>        
         `;

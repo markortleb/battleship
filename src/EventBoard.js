@@ -1,4 +1,4 @@
-
+import Player from "./Player";
 
 
 export default function EventBoard (appState, renderer) {
@@ -8,6 +8,7 @@ export default function EventBoard (appState, renderer) {
     const initPlayButton = () => {
         const playButtonNode = document.querySelectorAll('.play-button')[0];
         playButtonNode.addEventListener('click', e => {
+            _appState.player = Player();
             _renderer.renderChoosingScreen();
             initChoosingBoard();
         });
@@ -19,6 +20,7 @@ export default function EventBoard (appState, renderer) {
 
     const initChoosingBoard = () => {
         const choosingBoardNode = document.querySelectorAll('.user-board')[0];
+        const tdNodes = choosingBoardNode.querySelectorAll('td');
         const leftArrowNode = document.querySelectorAll('.info-area img:first-of-type')[0];
         const rightArrowNode = document.querySelectorAll('.info-area img:last-of-type')[0];
         const refreshHighlight = () => {
@@ -29,11 +31,18 @@ export default function EventBoard (appState, renderer) {
             }
         };
 
-        choosingBoardNode.addEventListener('click', e => {
+
+        tdNodes.forEach(node => node.addEventListener('click', e => {
+            let x = node.cellIndex;
+            let y = node.closest('tr').rowIndex;
+
+            console.log(x + ' ' + y);
             _appState.currentPlacingIndex += 1;
             _renderer.renderChoosingScreen();
             initChoosingBoard();
-        });
+        }));
+
+
 
         choosingBoardNode.addEventListener('mouseover', e => {
             refreshHighlight();
