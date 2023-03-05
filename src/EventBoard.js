@@ -19,6 +19,15 @@ export default function EventBoard (appState, renderer) {
 
     const initChoosingBoard = () => {
         const choosingBoardNode = document.querySelectorAll('.user-board')[0];
+        const leftArrowNode = document.querySelectorAll('.info-area img:first-of-type')[0];
+        const rightArrowNode = document.querySelectorAll('.info-area img:last-of-type')[0];
+        const refreshHighlight = () => {
+            let tdNode = choosingBoardNode.querySelectorAll('td:hover')[0];
+            if (tdNode !== undefined) {
+                let trNode = tdNode.closest('tr');
+                _renderer.renderPlacementHighlight(tdNode.cellIndex, trNode.rowIndex);
+            }
+        };
 
         choosingBoardNode.addEventListener('click', e => {
             _appState.currentPlacingIndex += 1;
@@ -27,13 +36,27 @@ export default function EventBoard (appState, renderer) {
         });
 
         choosingBoardNode.addEventListener('mouseover', e => {
-            let tdNode = choosingBoardNode.querySelectorAll('td:hover')[0]
-            let trNode = tdNode.closest('tr');
-            _renderer.renderPlacementHighlight(tdNode.cellIndex, trNode.rowIndex);
+            refreshHighlight();
         });
 
         choosingBoardNode.addEventListener('mouseleave', e => {
             _renderer.renderClearHighlight();
+        });
+
+        leftArrowNode.addEventListener('click', e => {
+            if (_appState.choosingOrientation === 'vertical') {
+                _appState.choosingOrientation = 'horizontal';
+            } else {
+                _appState.choosingOrientation = 'vertical';
+            }
+        });
+
+        rightArrowNode.addEventListener('click', e => {
+            if (_appState.choosingOrientation === 'vertical') {
+                _appState.choosingOrientation = 'horizontal';
+            } else {
+                _appState.choosingOrientation = 'vertical';
+            }
         });
 
     };

@@ -47,13 +47,17 @@ export default function Renderer(appState) {
 
         if (orientation === 'vertical') {
             for (let i = y; i < y + length; i++) {
-                let cell = userBoardNode.rows[i].cells[x];
-                cell.classList.add('ship-placement');
+                if (0 <= x && x < 10 && 0 <= i && i < 10) {
+                    let cell = userBoardNode.rows[i].cells[x];
+                    cell.classList.add('ship-placement');
+                }
             }
         } else if (orientation === 'horizontal') {
             for (let i = x; i < x + length; i++) {
-                let cell = userBoardNode.rows[y].cells[i];
-                cell.classList.add('ship-placement');
+                if (0 <= i && i < 10 && 0 <= y && y < 10) {
+                    let cell = userBoardNode.rows[y].cells[i];
+                    cell.classList.add('ship-placement');
+                }
             }
         }
     };

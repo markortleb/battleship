@@ -1,6 +1,14 @@
+import LeftArrowImg from './img/arrow-left-bold-box-outline.svg';
+import RightArrowImg from './img/arrow-right-bold-box-outline.svg';
 
 
 export default function UI() {
+
+    let _arrowLeftImg = new Image();
+    let _arrowRightImg = new Image();
+
+    _arrowLeftImg.src = LeftArrowImg;
+    _arrowRightImg.src = RightArrowImg;
 
     const _getBoard = (className, width, height) => {
         let userBoardHtml = `<table class="${className}">`;
@@ -40,9 +48,9 @@ export default function UI() {
         </span>
         ${_getBoard('user-board',10, 10)}
         <div class="info-area">
-            <img src="src/img/arrow-left-bold-box-outline.svg" alt="">
+            <img src="${_arrowLeftImg.src}" alt="">
             <span>Use arrow keys to change orientation.</span>
-            <img src="src/img/arrow-right-bold-box-outline.svg" alt="">
+            <img src="${_arrowRightImg.src}" alt="">
         </div>        
         `;
     }
