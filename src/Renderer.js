@@ -20,6 +20,23 @@ export default function Renderer(appState) {
         renderTitleScreen();
     };
 
+    const _renderShips = (player, boardClass) => {
+        const userBoardNode = document.querySelectorAll(`.${boardClass}`)[0];
+        const tdNodes = userBoardNode.querySelectorAll('td');
+
+        tdNodes.forEach(node => {
+            let x = node.cellIndex;
+            let y = node.closest('tr').rowIndex;
+
+            if (player.gameBoard.isSpotTaken(x, y)) {
+                console.log("hey");
+                node.classList.add('ship');
+            } else {
+                node.classList.remove('ship');
+            }
+        });
+    };
+
     const renderChoosingScreen = () => {
         let gameAreaNode = document.querySelectorAll('.game-area')[0];
         gameAreaNode.classList.remove('title-screen');
@@ -29,8 +46,11 @@ export default function Renderer(appState) {
         gameAreaNode.insertAdjacentHTML(
             'beforeend',
             _ui.choosingScreenInner(_appState.shipList[_appState.currentPlacingIndex].name)
-        );
-    }
+        )
+
+        _renderShips(_appState.player, 'user-board');
+
+    };
 
     const renderClearHighlight = () => {
         Array.from(document.querySelectorAll('.ship-placement'))
@@ -62,6 +82,19 @@ export default function Renderer(appState) {
         }
     };
 
+    const renderPlayingScreen = () => {
+        let gameAreaNode = document.querySelectorAll('.game-area')[0];
+        gameAreaNode.classList.remove('choosing-screen');
+        gameAreaNode.classList.add('playing-screen');
+        gameAreaNode.innerHTML = '';
+
+        gameAreaNode.insertAdjacentHTML(
+            'beforeend',
+            _ui.playingScreenInner()
+        );
+
+        _renderShips(_appState.player, 'user-board');
+    };
 
     return {
         renderSkeleton,
@@ -69,6 +102,7 @@ export default function Renderer(appState) {
         init,
         renderChoosingScreen,
         renderPlacementHighlight,
-        renderClearHighlight
+        renderClearHighlight,
+        renderPlayingScreen
     }
 }

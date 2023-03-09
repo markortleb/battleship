@@ -179,4 +179,22 @@ describe('GameBoard', () => {
         expect(gameBoard.getHitMap().sort()).toEqual(expectMap.sort());
     });
 
+    it('Test placing a ship, then checking if that spot is taken.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+
+        expect(gameBoard.isSpotTaken(2,1)).toBe(true);
+    });
+
+    it('Test placing a ship, then checking if empty spot is taken.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+
+        expect(gameBoard.isSpotTaken(3,3)).toBe(false);
+    });
+
 });

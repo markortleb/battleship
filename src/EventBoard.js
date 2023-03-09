@@ -1,4 +1,6 @@
 import Player from "./Player";
+import AI from "./AI";
+import Ship from "./Ship";
 
 
 export default function EventBoard (appState, renderer) {
@@ -9,8 +11,9 @@ export default function EventBoard (appState, renderer) {
         const playButtonNode = document.querySelectorAll('.play-button')[0];
         playButtonNode.addEventListener('click', e => {
             _appState.player = Player();
+            _appState.enemy = AI(Player());
             _renderer.renderChoosingScreen();
-            initChoosingBoard();
+            _initChoosingBoard();
         });
     };
 
@@ -18,11 +21,12 @@ export default function EventBoard (appState, renderer) {
         initPlayButton();
     };
 
-    const initChoosingBoard = () => {
+    const _initChoosingBoard = () => {
         const choosingBoardNode = document.querySelectorAll('.user-board')[0];
         const tdNodes = choosingBoardNode.querySelectorAll('td');
         const leftArrowNode = document.querySelectorAll('.info-area img:first-of-type')[0];
         const rightArrowNode = document.querySelectorAll('.info-area img:last-of-type')[0];
+
         const refreshHighlight = () => {
             let tdNode = choosingBoardNode.querySelectorAll('td:hover')[0];
             if (tdNode !== undefined) {
@@ -31,18 +35,29 @@ export default function EventBoard (appState, renderer) {
             }
         };
 
-
         tdNodes.forEach(node => node.addEventListener('click', e => {
             let x = node.cellIndex;
             let y = node.closest('tr').rowIndex;
+            let addedShip = _appState.player.gameBoard.addShip(
+                x,
+                y,
+                _appState.choosingOrientation,
+                Ship(_appState.shipList[_appState.currentPlacingIndex].size)
+            );
 
-            console.log(x + ' ' + y);
-            _appState.currentPlacingIndex += 1;
-            _renderer.renderChoosingScreen();
-            initChoosingBoard();
+            if (addedShip) {
+                _appState.enemy.randomlyPlaceShip(Ship(_appState.shipList[_appState.currentPlacingIndex].size));
+                console.log(_appState.enemy.gameBoard.getTotalShips());
+                _appState.currentPlacingIndex += 1;
+                if (_appState.currentPlacingIndex < _appState.shipList.length) {
+                    _renderer.renderChoosingScreen();
+                    _initChoosingBoard();
+                } else {
+                    _renderer.renderPlayingScreen();
+                }
+            }
+
         }));
-
-
 
         choosingBoardNode.addEventListener('mouseover', e => {
             refreshHighlight();
@@ -67,6 +82,10 @@ export default function EventBoard (appState, renderer) {
                 _appState.choosingOrientation = 'vertical';
             }
         });
+    };
+
+
+    const initPlayingBoard  = () => {
 
     };
 
