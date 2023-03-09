@@ -22,7 +22,7 @@ export default function EventBoard (appState, renderer) {
     };
 
     const _initChoosingBoard = () => {
-        const choosingBoardNode = document.querySelectorAll('.user-board')[0];
+        const choosingBoardNode = document.querySelectorAll('.choosing-screen .user-board')[0];
         const tdNodes = choosingBoardNode.querySelectorAll('td');
         const leftArrowNode = document.querySelectorAll('.info-area img:first-of-type')[0];
         const rightArrowNode = document.querySelectorAll('.info-area img:last-of-type')[0];
@@ -54,6 +54,7 @@ export default function EventBoard (appState, renderer) {
                     _initChoosingBoard();
                 } else {
                     _renderer.renderPlayingScreen();
+                    initPlayingBoard();
                 }
             }
 
@@ -86,7 +87,18 @@ export default function EventBoard (appState, renderer) {
 
 
     const initPlayingBoard  = () => {
+        const userBoardNode = document.querySelectorAll('.playing-screen .user-board')[0];
+        const enemyBoardNode = document.querySelectorAll('.playing-screen .enemy-board')[0];
+        const enemyTdNodes = enemyBoardNode.querySelectorAll('td');
 
+        enemyTdNodes.forEach(node => node.addEventListener('click', e => {
+            let x = node.cellIndex;
+            let y = node.closest('tr').rowIndex;
+            _appState.enemy.gameBoard.hit(x, y);
+            _appState.enemy.takeTurn(_appState.player.gameBoard);
+            _renderer.renderPlayingScreen();
+            initPlayingBoard();
+        }));
     };
 
     return {

@@ -21,18 +21,38 @@ export default function Renderer(appState) {
     };
 
     const _renderShips = (player, boardClass) => {
-        const userBoardNode = document.querySelectorAll(`.${boardClass}`)[0];
-        const tdNodes = userBoardNode.querySelectorAll('td');
+        const boardNode = document.querySelectorAll(`.${boardClass}`)[0];
+        const tdNodes = boardNode.querySelectorAll('td');
 
         tdNodes.forEach(node => {
             let x = node.cellIndex;
             let y = node.closest('tr').rowIndex;
 
             if (player.gameBoard.isSpotTaken(x, y)) {
-                console.log("hey");
                 node.classList.add('ship');
             } else {
                 node.classList.remove('ship');
+            }
+        });
+    };
+
+    const _renderHits = (player, boardClass) => {
+        const boardNode = document.querySelectorAll(`.${boardClass}`)[0];
+        const tdNodes = boardNode.querySelectorAll('td');
+
+        tdNodes.forEach(node => {
+            let x = node.cellIndex;
+            let y = node.closest('tr').rowIndex;
+
+            if (player.gameBoard.isSpotHit(x, y)) {
+                node.innerHTML = 'X';
+                if (player.gameBoard.isSpotTaken(x, y)) {
+                    node.classList.remove('ship');
+                    node.classList.add('ship-hit');
+                }
+            } else {
+                node.innerHTML = '';
+                node.classList.remove('ship-hit');
             }
         });
     };
@@ -93,7 +113,10 @@ export default function Renderer(appState) {
             _ui.playingScreenInner()
         );
 
+
         _renderShips(_appState.player, 'user-board');
+        _renderHits(_appState.player, 'user-board');
+        _renderHits(_appState.enemy, 'enemy-board');
     };
 
     return {

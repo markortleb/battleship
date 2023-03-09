@@ -165,6 +165,18 @@ export default function GameBoard() {
         return spotTaken
     };
 
+    const isSpotHit = (x, y) => {
+        let isSpotHit = false;
+
+        _hitMap.forEach(point => {
+            if (point.x === x && point.y === y) {
+                isSpotHit = true;
+            }
+        });
+
+        return isSpotHit;
+    };
+
     return {
         addShip,
         getHealth,
@@ -173,6 +185,7 @@ export default function GameBoard() {
         getTotalShips,
         getTotalLivingShips,
         hit,
-        isSpotTaken
+        isSpotTaken,
+        isSpotHit
     };
 }

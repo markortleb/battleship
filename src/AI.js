@@ -23,7 +23,7 @@ export default function AI(player) {
         }
     };
 
-    const takeTurn = () => {
+    const takeTurn = (otherBoard) => {
 
     };
 

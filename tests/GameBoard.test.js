@@ -197,4 +197,23 @@ describe('GameBoard', () => {
         expect(gameBoard.isSpotTaken(3,3)).toBe(false);
     });
 
+    it('Test hitting the board, then check if spot was hit.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.hit(5,5)
+
+        expect(gameBoard.isSpotHit(5,5)).toBe(true);
+    });
+
+    it('Test hitting the board, then check if an non hit spot was not hit.', () => {
+        let gameBoard = GameBoard();
+        let ship1 = Ship(3);
+
+        gameBoard.addShip(1, 1, 'horizontal', ship1);
+        gameBoard.hit(5,5)
+
+        expect(gameBoard.isSpotHit(6,4)).toBe(false);
+    });
 });
