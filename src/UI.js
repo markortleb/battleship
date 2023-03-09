@@ -55,22 +55,22 @@ export default function UI() {
         `;
     }
 
-    const playingScreenInner = () => {
+    const playingScreenInner = (status) => {
         return `
         <ul class="board-area">
             <li class="player-area">
                 <span class="board-name">You</span>
                 <div class="stats-area">
-                    <span>HP: 13/13</span>
-                    <span>Ships: 6/6</span>
+                    <span>HP: ${status.playerHitPoints}</span>
+                    <span>Ships: ${status.playerShips}</span>
                 </div>
                 ${_getBoard('user-board',10, 10)}
             </li>
             <li class="enemy-area">
                 <span class="board-name">Enemy</span>
                 <div class="stats-area">
-                    <span>HP: 13/13</span>
-                    <span>Ships: 6/6</span>
+                    <span>HP: ${status.enemyHitPoints}</span>
+                    <span>Ships: ${status.enemyShips}</span>
                 </div>
                 ${_getBoard('enemy-board',10, 10)}
             </li>

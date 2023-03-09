@@ -105,13 +105,19 @@ export default function Renderer(appState) {
 
     const renderPlayingScreen = () => {
         let gameAreaNode = document.querySelectorAll('.game-area')[0];
+        let status = {
+            playerHitPoints: `${_appState.player.gameBoard.getHealth()}/${_appState.player.gameBoard.getTotalShipArea()}`,
+            playerShips: `${_appState.player.gameBoard.getTotalLivingShips()}/${_appState.player.gameBoard.getTotalShips()}`,
+            enemyHitPoints: `${_appState.enemy.gameBoard.getHealth()}/${_appState.enemy.gameBoard.getTotalShipArea()}`,
+            enemyShips: `${_appState.enemy.gameBoard.getTotalLivingShips()}/${_appState.enemy.gameBoard.getTotalShips()}`
+        };
         gameAreaNode.classList.remove('choosing-screen');
         gameAreaNode.classList.add('playing-screen');
         gameAreaNode.innerHTML = '';
 
         gameAreaNode.insertAdjacentHTML(
             'beforeend',
-            _ui.playingScreenInner()
+            _ui.playingScreenInner(status)
         );
 
 
