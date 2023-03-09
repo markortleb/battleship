@@ -7,18 +7,20 @@ export default function EventBoard (appState, renderer) {
     let _appState = appState;
     let _renderer = renderer;
 
-    const initPlayButton = () => {
+    const _initPlayButton = () => {
         const playButtonNode = document.querySelectorAll('.play-button')[0];
         playButtonNode.addEventListener('click', e => {
             _appState.player = Player();
             _appState.enemy = AI(Player());
+            _appState.currentPlacingIndex = 0;
+            _appState.choosingOrientation = 'vertical';
             _renderer.renderChoosingScreen();
             _initChoosingBoard();
         });
     };
 
     const init = () => {
-        initPlayButton();
+        _initPlayButton();
     };
 
     const _initChoosingBoard = () => {
@@ -54,7 +56,7 @@ export default function EventBoard (appState, renderer) {
                     _initChoosingBoard();
                 } else {
                     _renderer.renderPlayingScreen();
-                    initPlayingBoard();
+                    _initPlayingBoard();
                 }
             }
 
@@ -86,8 +88,7 @@ export default function EventBoard (appState, renderer) {
     };
 
 
-    const initPlayingBoard  = () => {
-        const userBoardNode = document.querySelectorAll('.playing-screen .user-board')[0];
+    const _initPlayingBoard  = () => {
         const enemyBoardNode = document.querySelectorAll('.playing-screen .enemy-board')[0];
         const enemyTdNodes = enemyBoardNode.querySelectorAll('td');
 
@@ -97,12 +98,18 @@ export default function EventBoard (appState, renderer) {
             _appState.enemy.gameBoard.hit(x, y);
             _appState.enemy.takeTurn(_appState.player.gameBoard);
             _renderer.renderPlayingScreen();
-            initPlayingBoard();
+            _initPlayingBoard();
+
+            if (_appState.enemy.hasLost() || _appState.player.hasLost()) {
+                _renderer.renderResultScreen();
+
+                _initPlayButton();
+            }
+
         }));
     };
 
     return {
-        initPlayButton,
         init
     };
 }

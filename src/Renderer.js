@@ -60,6 +60,7 @@ export default function Renderer(appState) {
     const renderChoosingScreen = () => {
         let gameAreaNode = document.querySelectorAll('.game-area')[0];
         gameAreaNode.classList.remove('title-screen');
+        gameAreaNode.classList.remove('result-screen');
         gameAreaNode.classList.add('choosing-screen');
         gameAreaNode.innerHTML = '';
 
@@ -119,6 +120,25 @@ export default function Renderer(appState) {
         _renderHits(_appState.enemy, 'enemy-board');
     };
 
+
+    const renderResultScreen = () => {
+        let gameAreaNode = document.querySelectorAll('.game-area')[0];
+        let playerWon = false;
+        gameAreaNode.classList.remove('playing-screen');
+        gameAreaNode.classList.add('result-screen');
+        gameAreaNode.innerHTML = '';
+
+        if (_appState.enemy.hasLost()) {
+            playerWon = true;
+        }
+
+        gameAreaNode.insertAdjacentHTML(
+            'beforeend',
+            _ui.resultScreenInner(playerWon)
+        );
+
+    };
+
     return {
         renderSkeleton,
         renderTitleScreen,
@@ -126,6 +146,7 @@ export default function Renderer(appState) {
         renderChoosingScreen,
         renderPlacementHighlight,
         renderClearHighlight,
-        renderPlayingScreen
+        renderPlayingScreen,
+        renderResultScreen
     }
 }

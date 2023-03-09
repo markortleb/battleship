@@ -57,7 +57,6 @@ export default function UI() {
 
     const playingScreenInner = () => {
         return `
-         <span class="turn-announcer">Your Turn</span>
         <ul class="board-area">
             <li class="player-area">
                 <span class="board-name">You</span>
